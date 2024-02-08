@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import Input from "./Input.jsx";
 
-export default function NewProject() {
+export default function NewProject({onAdd}) {
     const title = useRef();
     const description = useRef();
     const dueDate = useRef();

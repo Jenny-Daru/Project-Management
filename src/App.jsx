@@ -13,37 +13,37 @@ function App() {
     setProjectsState((prevState) => {
       return {
         ...prevState,
-        selectedProjectId: null
+        selectedProjectId: null,
       };
     });
   }
 
   function handleAddProject(projectData) {
-    setProjectsState((prevState => {
+    setProjectsState((prevState) => {
+      const projectId = Math.random();
       const newProject = {
         ...projectData,
-        id: Math.random()
+        id: projectId
       };
       return {
         ...prevState,
-        projects: [...prevState.projects, newProject]
+        selectedProjectId: undefined,
+        projects: [...prevState.projects, newProject],
       };
-    }));
+    });
   }
-
-  console.log(projectsState);
 
   let content;
 
   if (projectsState.selectedProjectId === null) {
-    content = <NewProject />
+    content = <NewProject onAdd={handleAddProject}/>;
   } else if (projectsState.selectedProjectId === undefined) {
-    content = <NoProjectSelected onStartAddProject={handleStartAddProject} />
+    content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <ProjectsSidebar onStartAddProject={handleStartAddProject} />
+      <ProjectsSidebar onStartAddProject={handleStartAddProject} projects={projectsState.projects} />
       {content}
     </main>
   );
